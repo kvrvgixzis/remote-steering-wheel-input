@@ -39,6 +39,9 @@ class SocketServer(Thread):
             except BrokenPipeError as e:
                 logging.info(f'disconnected {c}')
                 self.connections.remove(c)
+            except ConnectionResetError as e:
+                logging.info(f'disconnected {c}')
+                self.connections.remove(c)
 
 
 if __name__ == '__main__':
