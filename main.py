@@ -15,8 +15,8 @@ def main():
 
             # gas
             if event.code == 'ABS_Y':
-                if event.state > 209:
-                    gas = round((event.state - 208) / 47, 2)
+                if event.state > 209 or event.state == 0:
+                    gas = round((event.state - 208) / 47, 2) if event.state != 0 else -1
                     print('gas', gas)
 
 
