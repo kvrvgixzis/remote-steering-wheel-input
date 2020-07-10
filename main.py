@@ -1,5 +1,9 @@
 from inputs import get_gamepad
 from numpy import clip
+import time
+
+from message import Message, MessageSerializer
+from server import SocketServer
 
 def convert_to_0_255(s):
     mn = 208
@@ -10,13 +14,15 @@ def convert_to_0_255(s):
 
 def main():
     reverse = False
-    while 1:
+    throttle = 0
+    steering = 0
+    while True:
         events = get_gamepad()
+        
         for event in events: # event.ev_type, event.code, event.state
             # steering
             if event.code == 'ABS_Z':
-                steering = event.state
-                print('steering', steering)
+                steering = clip([event.state], 0, 254)[0]
 
             # check reverse
             if event.code == 'BTN_PINKIE':
@@ -24,10 +30,18 @@ def main():
 
             # trottle
             if event.code == 'ABS_Y':
-                trottle = convert_to_0_255(event.state)
-                trottle = -trottle if reverse else trottle
-                print('trottle', trottle)
+                throttle = convert_to_0_255(event.state)
+                throttle = -throttle if reverse else throttle
+                throttle = clip([throttle], 0, 254)[0]
+
+        message = Message(throttle=throttle,
+                          steering=steering,
+                          reverse=reverse)
+        ss.send(msg=message)
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":
+    ss = SocketServer(host='localhost', port=9898)
+    ss.start()
     main()
