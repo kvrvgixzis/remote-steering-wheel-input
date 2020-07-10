@@ -2,7 +2,6 @@ from inputs import get_gamepad
 
 
 def main():
-    """Just print out some event infomation when the gamepad is used."""
     while 1:
         events = get_gamepad()
         for event in events:
