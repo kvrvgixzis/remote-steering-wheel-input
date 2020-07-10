@@ -42,7 +42,7 @@ class SocketServer(Thread):
 
 
 if __name__ == '__main__':
-    ss = SocketServer(host='localhost', port=9898)
+    ss = SocketServer(host='tech.splinex-team.com', port=5000)
     ss.start()
     while True:
         message = Message(throttle=random.randint(0, 254),

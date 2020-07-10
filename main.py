@@ -42,6 +42,6 @@ def main():
 
 
 if __name__ == "__main__":
-    ss = SocketServer(host='localhost', port=9898)
+    ss = SocketServer(host='0.0.0.0', port=5000)
     ss.start()
     main()
