@@ -53,4 +53,4 @@ class SocketClient(object):
 
 
 if __name__ == '__main__':
-    sc = SocketClient(host='tech.splinex-team.com', port=5000)
+    sc = SocketClient(host='0.0.0.0', port=5000)

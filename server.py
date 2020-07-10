@@ -42,14 +42,3 @@ class SocketServer(Thread):
             except ConnectionResetError as e:
                 logging.info(f'disconnected {c}')
                 self.connections.remove(c)
-
-
-if __name__ == '__main__':
-    ss = SocketServer(host='tech.splinex-team.com', port=5000)
-    ss.start()
-    while True:
-        message = Message(throttle=random.randint(0, 254),
-                          steering=random.randint(0, 254),
-                          reverse=random.randint(0, 1))
-        ss.send(msg=message)
-        time.sleep(0.1)
